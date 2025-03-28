@@ -12,6 +12,7 @@
         <module name="Recllamation" />
         <module name="api-gateway" />
         <module name="profile-service" />
+        <module name="ProductsCategories" />
         <module name="discovery-service" />
         <module name="mini_projet" />
       </profile>
@@ -19,6 +20,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ProductsCategories" options="-parameters" />
       <module name="Recllamation" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="config-server" options="-parameters" />
