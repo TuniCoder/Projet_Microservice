@@ -9,16 +9,20 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="config-server" />
+        <module name="mini_projet_panier" />
         <module name="profile-service" />
         <module name="discovery-service" />
+        <module name="Recllamation" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Recllamation" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="mini_projet_panier" options="-parameters" />
       <module name="profile-service" options="-parameters" />
     </option>
   </component>
