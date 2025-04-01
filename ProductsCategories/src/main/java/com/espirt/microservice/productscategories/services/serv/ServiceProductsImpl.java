@@ -18,13 +18,14 @@ public class ServiceProductsImpl implements IserviceProduts {
 
     ProductsRepo productsRepo;
     CategoriesRepo categoriesRepo;
+
     @Override
     public Products addProduct(Products product) {
         return productsRepo.save(product);
     }
 
     @Override
-    public Products updateProduct(Products product, Long id) {
+    public Products updateProduct(Products product, String id) {
         Products existingProduct = productsRepo.findById(id).orElse(null);
 
         if (existingProduct == null) {
@@ -55,13 +56,13 @@ public class ServiceProductsImpl implements IserviceProduts {
 
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(String id) {
         productsRepo.deleteById(id);
 
     }
 
     @Override
-    public Products getProductById(Long id) {
+    public Products getProductById(String id) {
         return productsRepo.findById(id).orElse(null);
     }
 
@@ -71,7 +72,7 @@ public class ServiceProductsImpl implements IserviceProduts {
     }
 
     @Override
-    public List<Products> getProductsByCategory(Long id) {
+    public List<Products> getProductsByCategory(String id) {
         return productsRepo.findByCategoryId(id);
     }
 }

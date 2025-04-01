@@ -12,24 +12,29 @@ import java.util.List;
 @RequestMapping("/api/prod/Categories")
 public class RestCategoryController {
     ServiceCategoryImpl serviceCategory;
+
     @PostMapping("/")
-    public Category addCategory(@RequestBody Category category){
+    public Category addCategory(@RequestBody Category category) {
         return serviceCategory.addCategory(category);
     }
+
     @PutMapping("/{id}")
-    public Category updateCategory(@RequestBody Category category , @PathVariable Long id){
-        return serviceCategory.updateCategory(category , id);
+    public Category updateCategory(@RequestBody Category category, @PathVariable String id) {
+        return serviceCategory.updateCategory(category, id);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id){
+    public void deleteCategory(@PathVariable String id) {
         serviceCategory.deleteCategory(id);
     }
+
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id){
+    public Category getCategoryById(@PathVariable String id) {
         return serviceCategory.getCategoryById(id);
     }
+
     @GetMapping("/")
-    public List<Category> getAllCategories(){
+    public List<Category> getAllCategories() {
         return serviceCategory.getAllCategories();
     }
 }

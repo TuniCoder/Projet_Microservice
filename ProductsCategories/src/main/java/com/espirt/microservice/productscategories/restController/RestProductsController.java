@@ -20,28 +20,34 @@ import java.util.UUID;
 @RequestMapping("/api/prod/products")
 public class RestProductsController {
     ServiceProductsImpl serviceProducts;
+
     @PostMapping("/")
-    public Products addProduct(@RequestBody Products product){
-       return serviceProducts.addProduct(product);
+    public Products addProduct(@RequestBody Products product) {
+        return serviceProducts.addProduct(product);
     }
+
     @GetMapping("/")
-    public List<Products> getAllProducts(){
+    public List<Products> getAllProducts() {
         return serviceProducts.getAllProducts();
     }
+
     @GetMapping("/{id}")
-    public Products getProductById(@PathVariable Long id){
+    public Products getProductById(@PathVariable String id) {
         return serviceProducts.getProductById(id);
     }
+
     @PutMapping("/{id}")
-    public Products updateProduct(@RequestBody Products product , @PathVariable Long id){
-        return serviceProducts.updateProduct(product , id);
+    public Products updateProduct(@RequestBody Products product, @PathVariable String id) {
+        return serviceProducts.updateProduct(product, id);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public void deleteProduct(@PathVariable String id) {
         serviceProducts.deleteProduct(id);
     }
+
     @GetMapping("/category/{id}")
-    public List<Products> getProductsByCategory(@PathVariable Long id){
+    public List<Products> getProductsByCategory(@PathVariable String id) {
         return serviceProducts.getProductsByCategory(id);
     }
 
@@ -65,7 +71,6 @@ public class RestProductsController {
                     .body("Failed to upload image: " + e.getMessage());
         }
     }
-
 
 
 }
