@@ -1,7 +1,7 @@
 package com.esprit.microservice.mini_projet.service;
 
 import com.esprit.microservice.mini_projet.models.Livreur;
-import com.esprit.microservice.mini_projet.repository.LivreurRepo;
+import com.esprit.microservice.mini_projet.repository.LivreurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 public class LivreurService {
 
     @Autowired
-    private LivreurRepo livreurRepo;
+    private LivreurRepository livreurRepo;
 
     public List<Livreur> getAllLivreurs() {
         return livreurRepo.findAll();

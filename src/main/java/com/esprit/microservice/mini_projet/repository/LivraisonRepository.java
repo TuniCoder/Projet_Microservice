@@ -1,9 +1,9 @@
 package com.esprit.microservice.mini_projet.repository;
 
-import com.esprit.microservice.mini_projet.models.Livreur;
+import com.esprit.microservice.mini_projet.models.Livraison;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LivreurRepo extends JpaRepository<Livreur, Integer> {
+public interface LivraisonRepository extends JpaRepository<Livraison, Integer> {
 }

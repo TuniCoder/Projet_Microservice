@@ -12,8 +12,27 @@ public class Livraison implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Date DateCreation, DateLivree;
-    private String StatusLivraison;
+    @Column(name = "date_creation")
+    private Date dateCreation;
+
+    @Column(name = "date_livree")
+    private Date dateLivree;
+
+    @Column(name = "status_livraison")
+    private String statusLivraison;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_livreur")
+    private Livreur livreur;
+
+    public Livraison() {}
+
+    public Livraison(Date dateCreation, Date dateLivree, String statusLivraison, Livreur livreur) {
+        this.dateCreation = dateCreation;
+        this.dateLivree = dateLivree;
+        this.statusLivraison = statusLivraison;
+        this.livreur = livreur;
+    }
 
     public Integer getId() {
         return id;
@@ -24,27 +43,27 @@ public class Livraison implements Serializable {
     }
 
     public Date getDateCreation() {
-        return DateCreation;
+        return dateCreation;
     }
 
     public void setDateCreation(Date dateCreation) {
-        DateCreation = dateCreation;
+        this.dateCreation = dateCreation;
     }
 
     public Date getDateLivree() {
-        return DateLivree;
+        return dateLivree;
     }
 
     public void setDateLivree(Date dateLivree) {
-        DateLivree = dateLivree;
+        this.dateLivree = dateLivree;
     }
 
     public String getStatusLivraison() {
-        return StatusLivraison;
+        return statusLivraison;
     }
 
     public void setStatusLivraison(String statusLivraison) {
-        StatusLivraison = statusLivraison;
+        this.statusLivraison = statusLivraison;
     }
 
     public Livreur getLivreur() {
@@ -55,17 +74,4 @@ public class Livraison implements Serializable {
         this.livreur = livreur;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idLivreur")
-    private Livreur livreur;
-
-    public Livraison(Date dateCreation, Date dateLivree, String statusLivraison, Livreur livreur) {
-        DateCreation = dateCreation;
-        DateLivree = dateLivree;
-        StatusLivraison = statusLivraison;
-        this.livreur = livreur;
-    }
-
-    public Livraison() {
-    }
 }
