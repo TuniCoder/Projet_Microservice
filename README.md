@@ -48,6 +48,8 @@ git clone https://github.com/TuniCoder/Projet_Microservice.git
 cd Projet_Microservice
 docker-compose up --build
 
+````
+
 ### 📂 3. Accéder aux interfaces
 
 | Service               | URL par défaut            |
