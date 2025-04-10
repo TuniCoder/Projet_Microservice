@@ -47,3 +47,13 @@ Assure-toi d’avoir les outils suivants installés sur ta machine :
 git clone https://github.com/TuniCoder/Projet_Microservice.git
 cd Projet_Microservice
 docker-compose up --build
+
+### 📂 3. Accéder aux interfaces
+
+| Service               | URL par défaut            |
+|-----------------------|---------------------------|
+| API Gateway           | [http://localhost:8080](http://localhost:8222)     |
+| Eureka Dashboard      | [http://localhost:8761](http://localhost:8761)     |
+| Config Server         | [http://localhost:8888](http://localhost:8888)     |
+
+
