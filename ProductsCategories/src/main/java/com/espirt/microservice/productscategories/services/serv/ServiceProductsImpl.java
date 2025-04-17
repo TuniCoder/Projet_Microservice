@@ -78,7 +78,8 @@ public class ServiceProductsImpl implements IserviceProduts {
         return productsRepo.findByCategoryId(id);
     }
 
-    @Scheduled(cron = "0 59 19 * * ?", zone = "Africa/Tunis")
+    @Scheduled(cron = "0 15 10 * * ?", zone = "Africa/Tunis")
+
     public  void checkStockAndAlert () {
         log.info("Checking stock levels and sending alerts if necessary");
         List<Products> products = productsRepo.findAll();
