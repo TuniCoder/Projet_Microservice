@@ -2,6 +2,7 @@ package com.esprit.microservice.recllamation.service;
 
 import com.esprit.microservice.recllamation.entity.Reclamation;
 import com.esprit.microservice.recllamation.ReclamationRepository.ReclamationRepo;
+import com.esprit.microservice.recllamation.entity.TypeReclamation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,15 @@ public class ServiceImpl implements IService {
     @Override
     public List<Reclamation> getAllReclamations() {
         return reclamationRepo.findAll();
+    }
+
+    @Override
+    public List<Reclamation> getReclamationsByNewestDate() {
+        return reclamationRepo.findAllByOrderByDateCreationDesc();
+    }
+
+    @Override
+    public List<Reclamation> getReclamationsByType(TypeReclamation type) {
+        return reclamationRepo.findByType(type);
     }
 }
