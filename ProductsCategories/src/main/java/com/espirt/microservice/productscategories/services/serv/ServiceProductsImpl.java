@@ -7,6 +7,7 @@ import com.espirt.microservice.productscategories.repository.ProductsRepo;
 import com.espirt.microservice.productscategories.services.Interfaces.IserviceProduts;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +19,15 @@ public class ServiceProductsImpl implements IserviceProduts {
 
     ProductsRepo productsRepo;
     CategoriesRepo categoriesRepo;
+    private EmailService emailService;
+
     @Override
     public Products addProduct(Products product) {
         return productsRepo.save(product);
     }
 
     @Override
-    public Products updateProduct(Products product, Long id) {
+    public Products updateProduct(Products product, String id) {
         Products existingProduct = productsRepo.findById(id).orElse(null);
 
         if (existingProduct == null) {
@@ -55,13 +58,13 @@ public class ServiceProductsImpl implements IserviceProduts {
 
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(String id) {
         productsRepo.deleteById(id);
 
     }
 
     @Override
-    public Products getProductById(Long id) {
+    public Products getProductById(String id) {
         return productsRepo.findById(id).orElse(null);
     }
 
@@ -71,7 +74,27 @@ public class ServiceProductsImpl implements IserviceProduts {
     }
 
     @Override
-    public List<Products> getProductsByCategory(Long id) {
+    public List<Products> getProductsByCategory(String id) {
         return productsRepo.findByCategoryId(id);
+    }
+
+    @Scheduled(cron = "0 15 10 * * ?", zone = "Africa/Tunis")
+
+    public  void checkStockAndAlert () {
+        log.info("Checking stock levels and sending alerts if necessary");
+        List<Products> products = productsRepo.findAll();
+        String s= "";
+        boolean test = false;
+        for (Products product : products) {
+            if (product.getStockQuantity() < 5) {
+                test = true;
+                log.warn("Product {} is running low on stock. Current quantity: {}", product.getName(), product.getStockQuantity());
+                 s += "Product " + product.getName() + " is running low on stock. Current quantity: " + product.getStockQuantity() + "\n";
+            }
+        }
+        if (test) {
+            emailService.sendEmail("saker.hajji@esprit.tn", "Stock Alert", s);
+        }
+
     }
 }

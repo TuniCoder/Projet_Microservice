@@ -25,7 +25,7 @@ public class ServiceCategoryImpl implements IserviceCategory {
     }
 
     @Override
-    public Category updateCategory(Category category , Long id) {
+    public Category updateCategory(Category category, String id) {
         Category category1 = categoriesRepo.findById(id).orElse(null);
         if (category1 == null) {
             log.info("Category with ID {} not found", id);
@@ -38,13 +38,13 @@ public class ServiceCategoryImpl implements IserviceCategory {
     }
 
     @Override
-    public void deleteCategory(Long id) {
+    public void deleteCategory(String id) {
         categoriesRepo.deleteById(id);
 
     }
 
     @Override
-    public Category getCategoryById(Long id) {
+    public Category getCategoryById(String id) {
         return categoriesRepo.findById(id).orElse(null);
     }
 
