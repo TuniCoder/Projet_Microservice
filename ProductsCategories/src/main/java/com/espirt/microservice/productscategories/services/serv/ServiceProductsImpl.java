@@ -44,27 +44,57 @@ public class ServiceProductsImpl implements IserviceProduts {
             log.info("Product with ID {} not found", id);
             return null;
         }
-        Category category = categoriesRepo.findById(product.getCategory().getId()).orElse(null);
-        log.info("Category: {}", category);
-        if (category != null) {
-            existingProduct.setCategory(category);
+
+        // Update category if provided and exists
+        if (product.getCategory() != null) {
+            Category category = categoriesRepo.findById(product.getCategory().getId()).orElse(null);
+            log.info("Category: {}", category);
+            if (category != null) {
+                existingProduct.setCategory(category);
+            }
         }
 
-        // Mettre à jour uniquement les champs nécessaires
-        existingProduct.setName(product.getName());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setStockQuantity(product.getStockQuantity());
-        existingProduct.setImageUrl(product.getImageUrl());
-        existingProduct.setBrand(product.getBrand());
-        existingProduct.setSku(product.getSku());
-        existingProduct.setDiscountPercentage(product.getDiscountPercentage());
-        existingProduct.setIsActive(product.getIsActive());
+        // Update fields only if they are not null
+        if (product.getName() != null) {
+            existingProduct.setName(product.getName());
+        }
 
+        if (product.getDescription() != null) {
+            existingProduct.setDescription(product.getDescription());
+        }
 
-        // Sauvegarder et retourner l'objet mis à jour
+        if (product.getPrice() != null) {
+            existingProduct.setPrice(product.getPrice());
+        }
+
+        if (product.getStockQuantity() != 0) {  // Assuming stockQuantity should never be 0, or you can adjust the check accordingly
+            existingProduct.setStockQuantity(product.getStockQuantity());
+        }
+
+        if (product.getImageUrl() != null) {
+            existingProduct.setImageUrl(product.getImageUrl());
+        }
+
+        if (product.getBrand() != null) {
+            existingProduct.setBrand(product.getBrand());
+        }
+
+        if (product.getSku() != null) {
+            existingProduct.setSku(product.getSku());
+        }
+
+        if (product.getDiscountPercentage() != null) {
+            existingProduct.setDiscountPercentage(product.getDiscountPercentage());
+        }
+
+        if (product.getIsActive() != null) {
+            existingProduct.setIsActive(product.getIsActive());
+        }
+
+        // Save and return the updated product
         return productsRepo.save(existingProduct);
     }
+
 
 
     @Override
