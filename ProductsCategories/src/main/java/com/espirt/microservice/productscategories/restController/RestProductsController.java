@@ -20,7 +20,7 @@
     @RestController
     @AllArgsConstructor
     @RequestMapping("/api/prod/products")
-    @CrossOrigin(origins = "http://localhost:4200")
+
     public class RestProductsController {
         private final String OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
         private final String API_KEY = "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";
