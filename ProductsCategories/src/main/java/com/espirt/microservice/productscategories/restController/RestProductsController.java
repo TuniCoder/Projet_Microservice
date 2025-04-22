@@ -20,6 +20,7 @@
     @RestController
     @AllArgsConstructor
     @RequestMapping("/api/prod/products")
+    @CrossOrigin(origins = "http://localhost:4200")
     public class RestProductsController {
         private final String OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
         private final String API_KEY = "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";
@@ -124,6 +125,46 @@
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(null);
+            }
+        }
+        @PutMapping("/with-image/{id}")
+        public ResponseEntity<Products> updateProductWithImage(
+                @PathVariable("id") String id,
+                @RequestParam("product") String productJson,
+                @RequestParam(value = "file", required = false) MultipartFile file) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                Products updatedProduct = objectMapper.readValue(productJson, Products.class);
+
+                // Retrieve existing product
+                Products existingProduct = serviceProducts.getProductById(id);
+                if (existingProduct == null) {
+                    return ResponseEntity.notFound().build();
+                }
+
+                // Handle image upload if a new image is provided
+                if (file != null && !file.isEmpty()) {
+                    String uploadDir = "uploads/";
+                    String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                    Path path = Paths.get(uploadDir + fileName);
+                    Files.createDirectories(path.getParent());
+                    Files.write(path, file.getBytes());
+
+                    // Set the new image URL
+                    updatedProduct.setImageUrl(fileName);
+                } else {
+                    // Retain the existing image URL if no new file provided
+                    updatedProduct.setImageUrl(existingProduct.getImageUrl());
+                }
+
+                // Ensure the product ID remains consistent
+                updatedProduct.setId(id);
+
+                Products savedProduct = serviceProducts.updateProduct(updatedProduct, id);
+                return ResponseEntity.ok(savedProduct);
+
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         }
 
