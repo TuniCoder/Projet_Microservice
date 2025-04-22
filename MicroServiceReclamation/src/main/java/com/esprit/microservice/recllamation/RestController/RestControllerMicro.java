@@ -1,6 +1,7 @@
 package com.esprit.microservice.recllamation.RestController;
 
 import com.esprit.microservice.recllamation.entity.Reclamation;
+import com.esprit.microservice.recllamation.entity.TypeReclamation;
 import com.esprit.microservice.recllamation.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,15 @@ public class RestControllerMicro {
     @GetMapping
     public List<Reclamation> getAllReclamations() {
         return reclamationService.getAllReclamations();
+    }
+
+    @GetMapping("/newest")
+    public List<Reclamation> getReclamationsByNewestDate() {
+        return reclamationService.getReclamationsByNewestDate();
+    }
+
+    @GetMapping("/type/{type}")
+    public List<Reclamation> getReclamationsByType(@PathVariable TypeReclamation type) {
+        return reclamationService.getReclamationsByType(type);
     }
 }
