@@ -35,9 +35,6 @@ public class CartController {
     public ResponseEntity<CartItem> addToCart(@PathVariable Long userId, @RequestBody CartItem cartItem) {
         CartItem addedItem = cartService.addToCart(userId, cartItem);
 
-        // Si nécessaire, vous pouvez envoyer un email après l'ajout d'un article
-        // emailService.sendOrderConfirmationEmail(userEmail, orderId, totalAmount);
-
         return ResponseEntity.ok(addedItem);
     }
 

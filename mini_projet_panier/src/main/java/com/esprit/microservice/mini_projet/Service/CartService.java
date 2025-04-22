@@ -37,20 +37,43 @@ public class CartService {
     public CartItem addToCart(Long userId, CartItem cartItem) {
         Cart cart = getOrCreateCart(userId);
         cartItem.setUserId(userId);
-        CartItem savedItem = cartItemRepository.save(cartItem);
-        cart.getItems().add(savedItem);
+
+        // Vérifier si le produit existe déjà dans le panier
+        Optional<CartItem> existingItemOptional = cart.getItems().stream()
+                .filter(item -> item.getProductId().equals(cartItem.getProductId()))
+                .findFirst();
+
+        CartItem savedItem;
+
+        if (existingItemOptional.isPresent()) {
+            // Mise à jour de la quantité et du prix
+            CartItem existingItem = existingItemOptional.get();
+            existingItem.setQuantity(existingItem.getQuantity() + cartItem.getQuantity());
+            existingItem.setPrice(existingItem.getPrice() + cartItem.getPrice());
+            savedItem = cartItemRepository.save(existingItem);
+        } else {
+            // Ajouter un nouvel article
+            savedItem = cartItemRepository.save(cartItem);
+            cart.getItems().add(savedItem);
+        }
+
         updateCartTotal(cart);
         cartRepository.save(cart);
+
         return savedItem;
     }
 
+
     public void removeFromCart(Long userId, Long itemId) {
         Cart cart = getCartByUserId(userId);
-        cart.getItems().removeIf(item -> item.getId().equals(itemId));
-        updateCartTotal(cart);
-        cartRepository.save(cart);
-        cartItemRepository.deleteById(itemId);
+        boolean removed = cart.getItems().removeIf(item -> item.getId().equals(itemId));
+        if (removed) {
+            cartItemRepository.deleteById(itemId);
+            updateCartTotal(cart);
+            cartRepository.save(cart);
+        }
     }
+
 
     public void clearCart(Long userId) {
         Cart cart = getCartByUserId(userId);
