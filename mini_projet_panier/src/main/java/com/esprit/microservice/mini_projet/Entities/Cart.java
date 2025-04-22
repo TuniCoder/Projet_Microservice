@@ -18,6 +18,8 @@ public class Cart {
     private Long userId;
     
     private double totalPrice;
+    private double discountPercentage = 0.0;
+
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")

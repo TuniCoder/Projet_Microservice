@@ -94,8 +94,13 @@ public class CartService {
         double total = cart.getItems().stream()
                 .mapToDouble(item -> item.getPrice() * item.getQuantity())
                 .sum();
+
+        double discount = total * (cart.getDiscountPercentage() / 100);
+        total -= discount;
+
         cart.setTotalPrice(total);
     }
+
 
     public double getCartTotal(Long userId) {
         Cart cart = getCartByUserId(userId);
@@ -115,4 +120,23 @@ public class CartService {
         cartRepository.save(cart);
         return updatedItem;
     }
+    public void applyPromoCode(Long userId, String promoCode) {
+        Cart cart = getOrCreateCart(userId);
+
+        switch (promoCode.toUpperCase()) {
+            case "PROMO10":
+                cart.setDiscountPercentage(10.0);
+                break;
+            case "PROMO20":
+                cart.setDiscountPercentage(20.0);
+                break;
+            default:
+                cart.setDiscountPercentage(0.0);
+                throw new RuntimeException("Code promo invalide !");
+        }
+
+        updateCartTotal(cart);
+        cartRepository.save(cart);
+    }
+
 }
