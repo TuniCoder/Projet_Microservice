@@ -23,6 +23,16 @@ public class ServiceProductsImpl implements IserviceProduts {
 
     @Override
     public Products addProduct(Products product) {
+        Category category ;
+        if(product.getCategory() != null) {
+            category = categoriesRepo.findById(product.getCategory().getId()).orElse(null);
+            log.info("Category: {}", category);
+            if (category != null) {
+                product.setCategory(category);
+            }
+        } else {
+            log.warn("Product category is null");
+        }
         return productsRepo.save(product);
     }
 

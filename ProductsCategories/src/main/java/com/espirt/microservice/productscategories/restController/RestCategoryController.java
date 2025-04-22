@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/prod/Categories")
+@CrossOrigin(origins = "http://localhost:4200")
 public class RestCategoryController {
     ServiceCategoryImpl serviceCategory;
 
