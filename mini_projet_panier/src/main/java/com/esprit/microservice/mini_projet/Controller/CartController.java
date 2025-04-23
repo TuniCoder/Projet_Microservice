@@ -22,17 +22,17 @@ public class CartController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Cart> getCart(@PathVariable Long userId) {
+    public ResponseEntity<Cart> getCart(@PathVariable String userId) {
         return ResponseEntity.ok(cartService.getCartByUserId(userId));
     }
 
     @GetMapping("/{userId}/total")
-    public ResponseEntity<Double> getCartTotal(@PathVariable Long userId) {
+    public ResponseEntity<Double> getCartTotal(@PathVariable String userId) {
         return ResponseEntity.ok(cartService.getCartTotal(userId));
     }
 
     @PostMapping("/{userId}/items")
-    public ResponseEntity<CartItem> addToCart(@PathVariable Long userId, @RequestBody CartItem cartItem) {
+    public ResponseEntity<CartItem> addToCart(@PathVariable String userId, @RequestBody CartItem cartItem) {
         CartItem addedItem = cartService.addToCart(userId, cartItem);
 
         return ResponseEntity.ok(addedItem);
@@ -40,26 +40,26 @@ public class CartController {
 
     @PutMapping("/{userId}/items/{itemId}/quantity")
     public ResponseEntity<CartItem> updateItemQuantity(
-            @PathVariable Long userId,
+            @PathVariable String userId,
             @PathVariable Long itemId,
             @RequestParam int quantity) {
         return ResponseEntity.ok(cartService.updateItemQuantity(userId, itemId, quantity));
     }
 
     @DeleteMapping("/{userId}/items/{itemId}")
-    public ResponseEntity<Void> removeFromCart(@PathVariable Long userId, @PathVariable Long itemId) {
+    public ResponseEntity<Void> removeFromCart(@PathVariable String userId, @PathVariable Long itemId) {
         cartService.removeFromCart(userId, itemId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{userId}/clear")
-    public ResponseEntity<Void> clearCart(@PathVariable Long userId) {
+    public ResponseEntity<Void> clearCart(@PathVariable String userId) {
         cartService.clearCart(userId);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Cart> updateCart(@PathVariable Long userId, @RequestBody Cart cart) {
+    public ResponseEntity<Cart> updateCart(@PathVariable String userId, @RequestBody Cart cart) {
         if (!userId.equals(cart.getUserId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -74,7 +74,7 @@ public class CartController {
 
 
     @PostMapping("/{userId}/checkout")
-    public ResponseEntity<String> checkout(@PathVariable Long userId, @RequestBody EmailDto email) {
+    public ResponseEntity<String> checkout(@PathVariable String userId, @RequestBody EmailDto email) {
 
 
         // Récupérer le panier de l'utilisateur
@@ -98,7 +98,7 @@ public class CartController {
         }
     }
     @PostMapping("/{userId}/apply-promo")
-    public ResponseEntity<Cart> applyPromo(@PathVariable Long userId, @RequestParam String code) {
+    public ResponseEntity<Cart> applyPromo(@PathVariable String userId, @RequestParam String code) {
         try {
             cartService.applyPromoCode(userId, code);
             Cart updatedCart = cartService.getCartByUserId(userId);

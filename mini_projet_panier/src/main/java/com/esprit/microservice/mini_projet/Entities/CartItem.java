@@ -14,6 +14,6 @@ public class CartItem {
 
     private String productId;
     private int quantity;
-    private Long userId;
+    private String userId;
     private double price;
 }

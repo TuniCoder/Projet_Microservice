@@ -19,7 +19,7 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public Cart getOrCreateCart(Long userId) {
+    public Cart getOrCreateCart(String userId) {
         return cartRepository.findByUserId(userId)
                 .orElseGet(() -> {
                     Cart newCart = new Cart();
@@ -29,12 +29,12 @@ public class CartService {
                 });
     }
 
-    public Cart getCartByUserId(Long userId) {
+    public Cart getCartByUserId(String userId) {
         return cartRepository.findByUserId(userId).orElse(null);
     }
 
 
-    public CartItem addToCart(Long userId, CartItem cartItem) {
+    public CartItem addToCart(String userId, CartItem cartItem) {
         Cart cart = getOrCreateCart(userId);
         cartItem.setUserId(userId);
 
@@ -64,7 +64,7 @@ public class CartService {
     }
 
 
-    public void removeFromCart(Long userId, Long itemId) {
+    public void removeFromCart(String userId, Long itemId) {
         Cart cart = getCartByUserId(userId);
         boolean removed = cart.getItems().removeIf(item -> item.getId().equals(itemId));
         if (removed) {
@@ -75,7 +75,7 @@ public class CartService {
     }
 
 
-    public void clearCart(Long userId) {
+    public void clearCart(String userId) {
         Cart cart = getCartByUserId(userId);
         List<CartItem> items = cart.getItems();
         cart.getItems().clear();
@@ -125,12 +125,12 @@ public class CartService {
     }
 
 
-    public double getCartTotal(Long userId) {
+    public double getCartTotal(String userId) {
         Cart cart = getCartByUserId(userId);
         return cart.getTotalPrice();
     }
 
-    public CartItem updateItemQuantity(Long userId, Long itemId, int newQuantity) {
+    public CartItem updateItemQuantity(String userId, Long itemId, int newQuantity) {
         Cart cart = getCartByUserId(userId);
         CartItem item = cart.getItems().stream()
                 .filter(i -> i.getId().equals(itemId))
@@ -143,7 +143,7 @@ public class CartService {
         cartRepository.save(cart);
         return updatedItem;
     }
-    public void applyPromoCode(Long userId, String promoCode) {
+    public void applyPromoCode(String userId, String promoCode) {
         Cart cart = getOrCreateCart(userId);
 
         switch (promoCode.toUpperCase()) {
