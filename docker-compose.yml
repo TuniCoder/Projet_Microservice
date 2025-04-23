@@ -69,6 +69,24 @@ services:
     networks:
       - microservices-network
 
+  Pnier-service:
+    container_name: Panier-service
+    image: Panier-service
+    build: ./mini_projet_panier
+    ports:
+      - "8081:8081"
+    environment:
+      - HOSTNAME=Panier-service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/ecommerce_panier?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - discovery-service
+      - mysql
+    networks:
+      - microservices-network
+
   reclamation-service:
     container_name: reclamation-service
     image: reclamation-service

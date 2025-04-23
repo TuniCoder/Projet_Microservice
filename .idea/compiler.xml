@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
-        <module name="mini_projet_panier" />
         <module name="Recllamation" />
+        <module name="Panier" />
         <module name="api-gateway" />
         <module name="profile-service" />
         <module name="ProductsCategories" />
@@ -17,9 +17,13 @@
         <module name="mini_projet" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mini_projet_panier" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Panier" options="-parameters" />
       <module name="ProductsCategories" options="-parameters" />
       <module name="Recllamation" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
