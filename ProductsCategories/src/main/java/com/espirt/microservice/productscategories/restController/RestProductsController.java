@@ -1,8 +1,8 @@
     package com.espirt.microservice.productscategories.restController;
 
     import com.espirt.microservice.productscategories.entity.Products;
-    import com.espirt.microservice.productscategories.services.serv.RabbitMQProducer;
     import com.espirt.microservice.productscategories.services.serv.ServiceProductsImpl;
+    import com.espirt.microservice.productscategories.services.serv.UserProducer;
     import com.fasterxml.jackson.databind.ObjectMapper;
     import lombok.AllArgsConstructor;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,7 @@
         private final String OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
         private final String API_KEY = "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";
 
-        @Autowired
-        private RabbitMQProducer rabbitMQProducer;
+
         ServiceProductsImpl serviceProducts;
 
         @PostMapping("/")
@@ -171,13 +170,16 @@
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         }
+        @Autowired
+        private UserProducer userProducer;
 
-        @GetMapping ("/send/{id}")
-        public ResponseEntity<String> sendProduct(  @PathVariable("id") String id) {
-
-            Products product = serviceProducts.getProductById(id);
-            rabbitMQProducer.sendMessage(product);
-            return ResponseEntity.ok("Product sent to RabbitMQ!");
+        @GetMapping("/send-user/{id}")
+        public String sendUserId(@PathVariable String id) {
+            userProducer.sendUserId(id);
+            return "User ID sent to userQueue: " + id;
         }
+
+
+
 
     }

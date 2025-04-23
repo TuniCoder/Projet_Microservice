@@ -1,4 +1,4 @@
-package com.espirt.microservice.productscategories;
+package tn.esprit.profile_service.config;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +10,4 @@ public class RabbitMQConfig {
     public Queue userQueue() {
         return new Queue("userQueue", false);
     }
-
-    @Bean
-    public Queue panierQueue() {
-        return new Queue("panierQueue", false);
-    }
 }
-

@@ -5,6 +5,8 @@ import com.esprit.microservice.mini_projet.Entities.CartItem;
 import com.esprit.microservice.mini_projet.Service.CartService;
 import com.esprit.microservice.mini_projet.Service.EmailDto;
 import com.esprit.microservice.mini_projet.Service.EmailService;
+import com.esprit.microservice.mini_projet.Service.ProductRequestProducer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,6 +108,14 @@ public class CartController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @Autowired
+    private ProductRequestProducer producer;
+
+    @GetMapping("/send-product/{id}")
+    public String sendProductId(@PathVariable String id) {
+        return producer.requestProductJsonById(id);
     }
 
 
