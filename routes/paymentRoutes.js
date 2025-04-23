@@ -13,5 +13,10 @@ router.get('/history/:userId', async (req, res) => {
       res.status(500).json({ error: 'Erreur serveur' });
     }
   });
+router.get('/', paymentController.getAllHistories);
+router.get('/:id', paymentController.getHistoryById);
+router.put('/:id', paymentController.updateHistory);
+router.delete('/:id', paymentController.deleteHistory);
+router.get('/history/user/:userId', paymentController.getHistoriesByUserId);
 
 module.exports = router;

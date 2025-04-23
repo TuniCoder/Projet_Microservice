@@ -2,10 +2,18 @@ const mongoose = require('mongoose');
 
 const historySchema = new mongoose.Schema({
   userId: {
-    type: Number,
+    type: String,
     required: true
   },
   productId: {
+    type: String,
+    required: true
+  },
+  quantity: {
+    type: Number,
+    required: true
+  },
+  totalPrice: {
     type: Number,
     required: true
   },
