@@ -2,8 +2,10 @@
 
     import com.espirt.microservice.productscategories.entity.Products;
     import com.espirt.microservice.productscategories.services.serv.ServiceProductsImpl;
+    import com.espirt.microservice.productscategories.services.serv.UserProducer;
     import com.fasterxml.jackson.databind.ObjectMapper;
     import lombok.AllArgsConstructor;
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.*;
     import org.springframework.web.bind.annotation.*;
     import org.springframework.web.client.RestTemplate;
@@ -24,6 +26,7 @@
     public class RestProductsController {
         private final String OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
         private final String API_KEY = "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";
+
 
         ServiceProductsImpl serviceProducts;
 
@@ -167,5 +170,16 @@
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         }
+        @Autowired
+        private UserProducer userProducer;
+
+        @GetMapping("/send-user/{id}")
+        public String sendUserId(@PathVariable String id) {
+            userProducer.sendUserId(id);
+            return "User ID sent to userQueue: " + id;
+        }
+
+
+
 
     }

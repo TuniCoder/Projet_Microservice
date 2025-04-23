@@ -54,6 +54,9 @@ public class ServiceProductsImpl implements IserviceProduts {
             }
         }
 
+        if (product.getIdUser() != null) {
+            existingProduct.setIdUser(product.getIdUser());
+        }
         // Update fields only if they are not null
         if (product.getName() != null) {
             existingProduct.setName(product.getName());

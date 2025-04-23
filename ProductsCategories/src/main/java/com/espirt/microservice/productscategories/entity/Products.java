@@ -24,6 +24,7 @@ public class Products {
     private String sku;
     private Double discountPercentage;
     private Boolean isActive = true;
+    private String idUser; // ID of the user who created the product
 
     @PrePersist
     public void generateId() {
